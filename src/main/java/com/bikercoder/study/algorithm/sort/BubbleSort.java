@@ -10,8 +10,8 @@ import java.util.Arrays;
 public class BubbleSort {
 
     public static void main(String[] args) {
-        int[] data = new int[]{10,9,8,7,6,1,2,3,4,5,11,12,13,14};
-        bubblSort3(data);
+        int[] data = new int[]{2,3,4,5,6,7,8,1};
+        bubblSort4(data);
         System.out.println(Arrays.toString(data));
     }
 
@@ -90,5 +90,47 @@ public class BubbleSort {
                 break;
             }
         }
+    }
+
+    /**
+     * 鸡尾酒算法: 冒泡排序的变种，例如如下数组{2,3,4,5,6,7,8,1}，普通冒泡排序从左往右进行比较，
+     * 而数组的左部分已经是有序的状态，却一直在做无用的比较。鸡尾酒算法，会依次从左往右进行比较，接着从右往左进行比较，两种方式交替进行。
+     * 第一轮会从左往右比较，最终会将8和1交换位置，形成如下数组{2,3,4,5,6,7,1,8}
+     * 第二轮从右往左进行比较，1会"冒泡"到0下标位置，最终形成如下数组{1,2,3,4,5,6,7,8},这时已经是有序的数组
+     * 第三轮接着从左往右进行比较，没有数据交换，于是跳出循环
+     * @param data
+     */
+    private static void bubblSort4(int[] data) {
+        int length = data.length;
+        int temp = 0;
+        for(int i = 0; i < length/2; i ++) {
+            boolean isChanged = false;
+            // 从左往右进行比较
+            for (int j = i; j < length - 1 - i; j ++) {
+                if(data[j] > data[j+1]){
+                    temp = data[j];
+                    data[j] = data[j+1];
+                    data[j+1] = temp;
+                    isChanged = true;
+                }
+            }
+            if (!isChanged) {
+                break;
+            }
+            // 从右向左比较
+            for (int j = length - 1 - i; j > i; j --) {
+                if(data[j] < data[j-1]){
+                    temp = data[j];
+                    data[j] = data[j-1];
+                    data[j-1] = temp;
+                    isChanged = true;
+                }
+            }
+            if (!isChanged) {
+                break;
+            }
+
+        }
+
     }
 }

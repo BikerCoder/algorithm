@@ -19,7 +19,7 @@ public class BinaryHeap {
     }
 
     /**
-     *  上浮
+     *  最小堆新添加元素时，再上浮调整
      * @param array
      */
     private static void upAdjustment(int[] array){
@@ -38,7 +38,7 @@ public class BinaryHeap {
 
 
     /**
-     * 下沉调整
+     * 删除元素时，删除堆顶元素，用最后一个子节点元素暂时代替堆顶位置，再下沉调整
      * @param array
      */
     private static void downAdjustment(int[] array, int parentIndex){

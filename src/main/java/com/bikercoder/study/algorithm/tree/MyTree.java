@@ -1,9 +1,6 @@
 package com.bikercoder.study.algorithm.tree;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author caoguo
@@ -30,6 +27,7 @@ public class MyTree {
         preOrderTraversal(node);
         System.out.println("中序遍历");
         inOrderTraversal(node);
+        List<Integer> integers = inorderTraversal(node);
         System.out.println("后序遍历");
         postOrderTraversal(node);
         System.out.println("借助栈来进行前序遍历");
@@ -40,6 +38,44 @@ public class MyTree {
         postOrderTraversalWithStack(node);
         System.out.println("层序遍历");
         levelOrderTraversal(node);
+    }
+
+    /**
+     * 莫里斯中序遍历，最终会将二叉树转换成一个链表，由左往右遍历
+     *
+     *              3                       2                           9
+     *            /   \                    / \                           \
+     *           2     8     --->        9   10         ---->             2
+     *          / \      \                     \                           \
+     *         9   10     4                     3                           10
+     *                                           \                           \
+     *                                            8                           3
+     *                                             \                           \
+     *                                              4                           8
+     *                                                                           \
+     * @param root                                                                4
+     * @return
+     */
+    public static List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        TreeNode pred = new TreeNode(0);
+        while (root != null) {
+            if (root.leftChild != null) {
+                pred = root.leftChild;
+                while (pred.rightChild != null) {
+                    pred = pred.rightChild;
+                }
+
+                pred.rightChild = root;
+                TreeNode tmp = root;
+                root = root.leftChild;
+                tmp.leftChild = null;
+            } else {
+                res.add(root.data);
+                root = root.rightChild;
+            }
+        }
+        return res;
     }
 
     /**

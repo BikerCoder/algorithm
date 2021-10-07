@@ -27,7 +27,7 @@ public class MyTree {
         preOrderTraversal(node);
         System.out.println("中序遍历");
         inOrderTraversal(node);
-        List<Integer> integers = inorderTraversal(node);
+        List<Integer> integers = inorderTraversalMorris(node);
         System.out.println("后序遍历");
         postOrderTraversal(node);
         System.out.println("借助栈来进行前序遍历");
@@ -71,6 +71,40 @@ public class MyTree {
                 root = root.leftChild;
                 tmp.leftChild = null;
             } else {
+                res.add(root.data);
+                root = root.rightChild;
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 中序遍历-莫里斯遍历，这种方法不会破坏数结构
+     * @param root
+     * @return
+     */
+    public static List<Integer> inorderTraversalMorris(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        TreeNode pred = new TreeNode(0);
+        while (root != null) {
+            if(root.leftChild != null) {
+                // 找到pred
+                pred = root.leftChild;
+                while(pred.rightChild != null && pred.rightChild != root) {
+                    pred = pred.rightChild;
+                }
+                // pred的右子节点为空，将pred的右子节点指向root；root = root.left，继续遍历左子树
+                if(pred.rightChild == null) {
+                    pred.rightChild = root;
+                    root = root.leftChild;
+                } else {
+                    // 右子节点不为空，将root加入结果，左子树已完成遍历，断开pred.right
+                    res.add(root.data);
+                    pred.rightChild = null;
+                    root = root.rightChild;
+                }
+            } else {
+                // 无左子节点，将root加入结果，root = root.right
                 res.add(root.data);
                 root = root.rightChild;
             }

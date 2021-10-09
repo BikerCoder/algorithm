@@ -25,9 +25,9 @@ public class MyTree {
         TreeNode node = createTree(inputList);
         System.out.println("前序遍历");
         preOrderTraversal(node);
+        List<Integer> integers = preOrderTraveralMorris(node);
         System.out.println("中序遍历");
         inOrderTraversal(node);
-        List<Integer> integers = inorderTraversalMorris(node);
         System.out.println("后序遍历");
         postOrderTraversal(node);
         System.out.println("借助栈来进行前序遍历");
@@ -110,6 +110,37 @@ public class MyTree {
             }
         }
         return res;
+    }
+
+    /**
+     *  前序遍历-莫里斯遍历
+     * @param root
+     * @return
+     */
+    private static List<Integer> preOrderTraveralMorris(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        TreeNode pred = null;
+        while(root != null) {
+            if(root.leftChild != null) {
+                pred = root.leftChild;
+                while (pred.rightChild != null && pred.rightChild != root) {
+                    pred = pred.rightChild;
+                }
+                if(pred.rightChild == null) {
+                    pred.rightChild = root;
+                    res.add(root.data);
+                    root = root.leftChild;
+                } else {
+                    pred.rightChild = null;
+                    root = root.rightChild;
+                }
+            } else {
+                res.add(root.data);
+                root = root.rightChild;
+            }
+        }
+        return res;
+
     }
 
     /**

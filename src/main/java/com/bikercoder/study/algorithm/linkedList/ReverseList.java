@@ -12,7 +12,7 @@ public class ReverseList {
         head.next.next = new ListNode(3);
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
-        head = reverseList(head);
+        head = reverseList2(head);
         while (head != null) {
             System.out.println(head.val);
             head = head.next;
@@ -37,5 +37,21 @@ public class ReverseList {
         }
         return prev;
 
+    }
+
+    /**
+     * 递归法 时间复杂度O(n),空间复杂度O(n)
+     *
+     * @param head
+     * @return
+     */
+    public static ListNode reverseList2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode newHead = reverseList2(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
     }
 }

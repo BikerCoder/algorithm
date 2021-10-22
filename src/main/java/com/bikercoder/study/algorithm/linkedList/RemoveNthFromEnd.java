@@ -14,7 +14,7 @@ public class RemoveNthFromEnd {
         head.next.next = new ListNode(3);
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
-        head = removeNthFromEnd2(head, 3);
+        head = removeNthFromEnd3(head, 3);
         while (head != null) {
             System.out.println(head.val);
             head = head.next;
@@ -66,6 +66,28 @@ public class RemoveNthFromEnd {
         }
         ListNode prev = stk.peek();
         prev.next = prev.next.next;
+        return dummy.next;
+    }
+
+    /**
+     * 双指针 时间复杂度O(n)，空间复杂度O(1)
+     *
+     * @param head
+     * @param n
+     * @return
+     */
+    public static ListNode removeNthFromEnd3(ListNode head, int n) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode first = head;
+        ListNode second = head;
+        for (int i = 0; i < n; i++) {
+            first = first.next;
+        }
+        while (first != null) {
+            first = first.next;
+            second = second.next;
+        }
+        second.next = second.next.next;
         return dummy.next;
     }
 }

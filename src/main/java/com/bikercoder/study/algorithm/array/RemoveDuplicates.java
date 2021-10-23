@@ -1,4 +1,4 @@
-package com.bikercoder.study.algorithm.linkedList;
+package com.bikercoder.study.algorithm.array;
 
 /**
  * @author caoguo

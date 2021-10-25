@@ -9,15 +9,6 @@ import java.util.*;
  **/
 public class MyTree {
 
-    private static class TreeNode {
-        Integer data; // 数据
-        TreeNode leftChild; // 左子节点
-        TreeNode rightChild; // 右子节点
-
-        TreeNode(Integer data) {
-            this.data = data;
-        }
-    }
 
     public static void main(String[] args) {
         LinkedList<Integer> inputList = new LinkedList<>(Arrays.asList(new Integer[]{3, 2, 9, null, null, 10, null,
@@ -42,18 +33,19 @@ public class MyTree {
 
     /**
      * 莫里斯中序遍历，最终会将二叉树转换成一个链表，由左往右遍历
+     * <p>
+     * 3                       2                           9
+     * /   \                    / \                           \
+     * 2     8     --->        9   10         ---->             2
+     * / \      \                     \                           \
+     * 9   10     4                     3                           10
+     * \                           \
+     * 8                           3
+     * \                           \
+     * 4                           8
+     * \
      *
-     *              3                       2                           9
-     *            /   \                    / \                           \
-     *           2     8     --->        9   10         ---->             2
-     *          / \      \                     \                           \
-     *         9   10     4                     3                           10
-     *                                           \                           \
-     *                                            8                           3
-     *                                             \                           \
-     *                                              4                           8
-     *                                                                           \
-     * @param root                                                                4
+     * @param root 4
      * @return
      */
     public static List<Integer> inorderTraversal(TreeNode root) {
@@ -80,6 +72,7 @@ public class MyTree {
 
     /**
      * 中序遍历-莫里斯遍历，这种方法不会破坏数结构
+     *
      * @param root
      * @return
      */
@@ -87,14 +80,14 @@ public class MyTree {
         List<Integer> res = new ArrayList<>();
         TreeNode pred = new TreeNode(0);
         while (root != null) {
-            if(root.leftChild != null) {
+            if (root.leftChild != null) {
                 // 找到pred
                 pred = root.leftChild;
-                while(pred.rightChild != null && pred.rightChild != root) {
+                while (pred.rightChild != null && pred.rightChild != root) {
                     pred = pred.rightChild;
                 }
                 // pred的右子节点为空，将pred的右子节点指向root；root = root.left，继续遍历左子树
-                if(pred.rightChild == null) {
+                if (pred.rightChild == null) {
                     pred.rightChild = root;
                     root = root.leftChild;
                 } else {
@@ -113,20 +106,21 @@ public class MyTree {
     }
 
     /**
-     *  前序遍历-莫里斯遍历
+     * 前序遍历-莫里斯遍历
+     *
      * @param root
      * @return
      */
     private static List<Integer> preOrderTraveralMorris(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         TreeNode pred = null;
-        while(root != null) {
-            if(root.leftChild != null) {
+        while (root != null) {
+            if (root.leftChild != null) {
                 pred = root.leftChild;
                 while (pred.rightChild != null && pred.rightChild != root) {
                     pred = pred.rightChild;
                 }
-                if(pred.rightChild == null) {
+                if (pred.rightChild == null) {
                     pred.rightChild = root;
                     res.add(root.data);
                     root = root.leftChild;
@@ -265,21 +259,22 @@ public class MyTree {
 
     /**
      * 借用队列来进行层序遍历
+     *
      * @param root
      */
-    public static void levelOrderTraversal(TreeNode root){
+    public static void levelOrderTraversal(TreeNode root) {
         Queue<TreeNode> queue = new LinkedList<>();
         // 根节点入队
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             // 出队，并打印
             System.out.println(node.data);
             // 一次入队左右子节点
-            if(node.leftChild != null){
+            if (node.leftChild != null) {
                 queue.offer(node.leftChild);
             }
-            if(node.rightChild != null){
+            if (node.rightChild != null) {
                 queue.offer(node.rightChild);
             }
         }

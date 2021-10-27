@@ -13,7 +13,7 @@ public class Intersect {
     public static void main(String[] args) {
         int[] num1 = new int[]{2, 4, 5, 4, 9};
         int[] num2 = new int[]{1, 4, 9, 7, 9};
-        int[] intersect = intersect(num1, num2);
+        int[] intersect = intersect2(num1, num2);
         System.out.println(Arrays.toString(intersect));
 
     }
@@ -50,4 +50,34 @@ public class Intersect {
         }
         return Arrays.copyOfRange(re, 0, index);
     }
+
+    /**
+     * 排序+双指针 时间复杂度 对两个数组进行排序的时间复杂度是 O(mlogm+nlogn)，
+     * 遍历两个数组的时间复杂度是 O(m+n)，因此总时间复杂度是 O(mlogm+nlogn)
+     * 空间复杂度O(min(m,n))
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public static int[] intersect2(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int length1 = nums1.length, length2 = nums2.length;
+        int index = 0, index1 = 0, index2 = 0;
+        int[] re = new int[Math.min(length1, length2)];
+        while (index1 < length1 && index2 < length2) {
+            if (nums1[index1] == nums2[index2]) {
+                re[index++] = nums1[index1];
+                index1++;
+                index2++;
+            } else if (nums1[index1] > nums2[index2]) {
+                index2++;
+            } else {
+                index1++;
+            }
+        }
+        return Arrays.copyOfRange(re, 0, index);
+    }
+
 }

@@ -286,7 +286,7 @@ public class MyTree {
      * @param inputList
      * @return
      */
-    private static TreeNode createTree(LinkedList<Integer> inputList) {
+    public static TreeNode createTree(LinkedList<Integer> inputList) {
         TreeNode node = null;
         if (inputList == null || inputList.isEmpty()) {
             return null;

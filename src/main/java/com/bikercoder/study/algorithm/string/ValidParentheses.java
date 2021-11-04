@@ -1,5 +1,7 @@
 package com.bikercoder.study.algorithm.string;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -9,12 +11,12 @@ import java.util.Stack;
  **/
 public class ValidParentheses {
     public static void main(String[] args) {
-        System.out.println(isValid(new String("((")));
+        System.out.println(isValid2(new String("{}()[")));
 
     }
 
     /**
-     * 迭代 借助栈存放符号
+     * 迭代 借助栈存放符号 时间复杂度O(n) 空间复杂度O(n)
      *
      * @param s
      * @return
@@ -40,4 +42,34 @@ public class ValidParentheses {
         }
         return stk.isEmpty();
     }
+
+    /**
+     * 迭代 借助栈存放符号 时间复杂度O(n) 空间复杂度O(n + x) x为字符集个数 (){}[] 字符集个数为6
+     *
+     * @param s
+     * @return
+     */
+    public static boolean isValid2(String s) {
+        char[] chars = s.toCharArray();
+        if (chars.length % 2 == 1) {
+            return false;
+        }
+        Stack<Character> stk = new Stack<>();
+        Map<Character, Character> map = new HashMap<>();
+        map.put(')', '(');
+        map.put(']', '[');
+        map.put('}', '{');
+        for (char c : chars) {
+            if (map.containsKey(c)) {
+                if (stk.isEmpty() || stk.peek() != map.get(c)) {
+                    return false;
+                }
+                stk.pop();
+            } else {
+                stk.push(c);
+            }
+        }
+        return stk.isEmpty();
+    }
+
 }

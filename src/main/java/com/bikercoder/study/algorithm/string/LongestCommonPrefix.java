@@ -7,9 +7,8 @@ package com.bikercoder.study.algorithm.string;
  **/
 public class LongestCommonPrefix {
     public static void main(String[] args) {
-//        String[] strs = new String[]{"lon","lo","long"};
-        String[] strs = new String[]{"lon", "lo", "ong"};
-        System.out.println(longestCommonPrefix(strs));
+        String[] strs = new String[]{"lon", "lo", "long"};
+        System.out.println(longestCommonPrefix2(strs));
     }
 
     /**
@@ -39,5 +38,27 @@ public class LongestCommonPrefix {
             index++;
         }
         return prefix.substring(0, index);
+    }
+
+    /**
+     * 竖向扫描 m是字符串数组中字符串的平均长度 n是数组的长度
+     * 时间复杂度O(mn)
+     * 空间复杂度O(1)
+     *
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix2(String[] strs) {
+        int length = strs[0].length();
+        int count = strs.length;
+        for (int i = 0; i < length; i++) {
+            char c = strs[0].charAt(i);
+            for (int j = 0; j < count; j++) {
+                if (strs[j].length() == i || c != strs[j].charAt(i)) {
+                    return strs[0].substring(0, i);
+                }
+            }
+        }
+        return strs[0];
     }
 }

@@ -8,7 +8,7 @@ package com.bikercoder.study.algorithm.string;
 public class LongestCommonPrefix {
     public static void main(String[] args) {
         String[] strs = new String[]{"lon", "lo", "long"};
-        System.out.println(longestCommonPrefix2(strs));
+        System.out.println(longestCommonPrefix3(strs));
     }
 
     /**
@@ -60,5 +60,38 @@ public class LongestCommonPrefix {
             }
         }
         return strs[0];
+    }
+
+    /**
+     * 分治法
+     * 时间复杂度O(mn) m是字符串数组中字符串的平均长度 n是数组的长度
+     * 空间复杂度O(m logn) 其中m是字符串数组中的字符串的平均长度，n是字符串的数量。
+     * 空间复杂度主要取决于递归调用的层数，层数最大为logn，每层需要m的空间存储返回结果
+     *
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix3(String[] strs) {
+        return longestCommonPrefix3(strs, 0, strs.length - 1);
+    }
+
+    private static String longestCommonPrefix3(String[] strs, int left, int right) {
+        if (left == right) {
+            return strs[left];
+        }
+        int mid = (left + right) >> 1;
+        String leftStr = longestCommonPrefix3(strs, left, mid);
+        String rightStr = longestCommonPrefix3(strs, mid + 1, right);
+        return commonPrefix(leftStr, rightStr);
+    }
+
+    private static String commonPrefix(String leftStr, String rightStr) {
+        int length = Math.min(leftStr.length(), rightStr.length());
+        for (int i = 0; i < length; i++) {
+            if (leftStr.charAt(i) != rightStr.charAt(i)) {
+                return leftStr.substring(0, i);
+            }
+        }
+        return leftStr.substring(0, length);
     }
 }

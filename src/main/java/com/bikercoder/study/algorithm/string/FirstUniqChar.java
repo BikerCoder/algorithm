@@ -1,7 +1,9 @@
 package com.bikercoder.study.algorithm.string;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 /**
  * @author caoguo
@@ -10,7 +12,7 @@ import java.util.Map;
  **/
 public class FirstUniqChar {
     public static void main(String[] args) {
-        System.out.println(firstUniqChar2("loveleetcode"));
+        System.out.println(firstUniqChar3("loveleetcode"));
     }
 
 
@@ -66,5 +68,43 @@ public class FirstUniqChar {
         }
         return -1;
 
+    }
+
+    /**
+     * 借助哈希存储索引，借助队列来存放顺序
+     * 时间复杂度O(n) n为字符串的长度
+     * 空间复杂度O(|Σ|) Σ为字符集
+     *
+     * @param s
+     * @return
+     */
+    public static int firstUniqChar3(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int n = s.length();
+        Queue<Pair> queue = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            if (!map.containsKey(ch)) {
+                map.put(ch, i);
+                queue.offer(new Pair(ch, i));
+            } else {
+                map.put(ch, -1);
+                while (!queue.isEmpty() && map.get(queue.peek().ch) == -1) {
+                    queue.poll();
+                }
+            }
+        }
+        return queue.isEmpty() ? -1 : queue.peek().pos;
+
+    }
+}
+
+class Pair {
+    char ch;
+    int pos;
+
+    Pair(char ch, int pos) {
+        this.ch = ch;
+        this.pos = pos;
     }
 }

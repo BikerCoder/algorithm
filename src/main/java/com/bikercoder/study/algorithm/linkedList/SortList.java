@@ -8,11 +8,11 @@ package com.bikercoder.study.algorithm.linkedList;
 public class SortList {
 
     public static void main(String[] args) {
-        ListNode node = new ListNode(1);
-        node.next = new ListNode(3);
+        ListNode node = new ListNode(2);
+        node.next = new ListNode(1);
         node.next.next = new ListNode(5);
-        node.next.next.next = new ListNode(2);
-        sortList2(node);
+        node.next.next.next = new ListNode(4);
+        node = sortList2(node);
         while (node != null) {
             System.out.println(node.val);
             node = node.next;

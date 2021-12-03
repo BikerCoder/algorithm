@@ -8,7 +8,7 @@ package com.bikercoder.study.algorithm.binarySearch;
 public class FindPeakElement {
 
     public static void main(String[] args) {
-        System.out.println(findPeakElement(new int[]{1, 2, 3, 2}));
+        System.out.println(findPeakElement2(new int[]{1, 2, 1, 3, 5, 6, 4}));
     }
 
     /**
@@ -29,6 +29,31 @@ public class FindPeakElement {
             }
         }
         return idx;
+    }
+
+    /**
+     * 二分法 时间复杂度O(log n) 空间复杂度O(1)
+     *
+     * @param nums
+     * @return
+     */
+    public static int findPeakElement2(int[] nums) {
+
+        int left = 0, right = nums.length - 1, ans = -1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            // nums[mid - 1] < nums[mid] < nums[mid + 1] 则mid为峰值
+            if (compare(nums, mid, mid - 1) > 0 && compare(nums, mid, mid + 1) > 0) {
+                ans = mid;
+                break;
+            }
+            if (compare(nums, mid, mid + 1) < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return ans;
     }
 
     private static int compare(int[] nums, int idx1, int idx2) {

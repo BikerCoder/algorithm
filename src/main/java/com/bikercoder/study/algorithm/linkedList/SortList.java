@@ -20,7 +20,9 @@ public class SortList {
     }
 
     /**
-     * 自顶向下归并排序 时间复杂度O(nlogn) 空间复杂度O(logn)
+     * 自顶向下归并排序 使用递归，将链表拆开成两个子链表，通过快慢指针找到链表的中点，直到子链表只有一个节点则跳出递归，再合并链表
+     * 时间复杂度O(nlogn)
+     * 空间复杂度O(logn)
      *
      * @param head
      * @return
@@ -28,6 +30,7 @@ public class SortList {
     public static ListNode sortList(ListNode head) {
         return sortList(head, null);
     }
+
 
     public static ListNode sortList(ListNode head, ListNode tail) {
         if (head == null) {
@@ -38,6 +41,7 @@ public class SortList {
             return head;
         }
         ListNode fast = head, slow = head;
+        // 通过快慢指针找到链表中点
         while (fast != tail) {
             slow = slow.next;
             fast = fast.next;
@@ -46,8 +50,11 @@ public class SortList {
             }
         }
         ListNode mid = slow;
+        // 左子链表
         ListNode left = sortList(head, mid);
+        // 右子链表
         ListNode right = sortList(mid, tail);
+        // 合并两个有序链表
         return MergeTwoLists.mergeTwoLists2(left, right);
     }
 

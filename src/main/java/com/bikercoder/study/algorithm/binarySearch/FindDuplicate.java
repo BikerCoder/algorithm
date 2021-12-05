@@ -12,8 +12,9 @@ public class FindDuplicate {
 
     /**
      * 二分法
-     * 时间复杂度
+     * 时间复杂度O(nlogn) n为数组的长度，二分查找最多需要二分O(logn)次 每次判断的时候需要O(n)遍历nums数组求解小于等于mid的个数
      * 空间复杂度O(1)
+     *
      * @param nums
      * @return
      */

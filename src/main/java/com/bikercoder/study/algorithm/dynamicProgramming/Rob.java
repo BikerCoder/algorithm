@@ -9,6 +9,7 @@ public class Rob {
 
     /**
      * 动态规划 时间复杂度O(n) 空间复杂度O(n)
+     * dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])
      *
      * @param nums
      * @return

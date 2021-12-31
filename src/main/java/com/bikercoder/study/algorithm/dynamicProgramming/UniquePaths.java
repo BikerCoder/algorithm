@@ -1,5 +1,7 @@
 package com.bikercoder.study.algorithm.dynamicProgramming;
 
+import java.util.Arrays;
+
 /**
  * @author caoguo
  * @Description： 62. 不同路径 https://leetcode-cn.com/problems/unique-paths/
@@ -37,5 +39,44 @@ public class UniquePaths {
             }
         }
         return dp[m - 1][n - 1];
+    }
+
+    /**
+     * 动态规划 时间复杂度O(mn) 空间复杂度O(2n)
+     *
+     * @param m
+     * @param n
+     * @return
+     */
+    public static int uniquePaths2(int m, int n) {
+        int[] cur = new int[n];
+        int[] pre = new int[n];
+        Arrays.fill(cur, 1);
+        Arrays.fill(pre, 1);
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                cur[j] = cur[j - 1] + pre[j];
+            }
+            pre = cur.clone();
+        }
+        return cur[n - 1];
+    }
+
+    /**
+     * 动态规划 时间复杂度O(mn) 空间复杂度O(n)
+     *
+     * @param m
+     * @param n
+     * @return
+     */
+    public static int uniquePaths3(int m, int n) {
+        int[] cur = new int[n];
+        Arrays.fill(cur, 1);
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                cur[j] = cur[j - 1] + cur[j];
+            }
+        }
+        return cur[n - 1];
     }
 }
